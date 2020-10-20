@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "outDir": "./dist",
+      "sourceMap": true,
+      "declaration": false,
+      "downlevelIteration": true,
+      "experimentalDecorators": true,
+      "moduleResolution": "node",
+      "importHelpers": true,
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "target": "es6",
+      "noImplicitAny": true,
+      "module": "commonjs",
+      "lib": [
+        "es2015",
+        "dom"
+      ],
+      "paths": {
+        "*": [
+          "node_modules/*"
+        ],
+        "@core/*": [
+          "src/core/*"
+        ],
+      }
+    },
+    "include": [
+      "src/**/*"
+    ]
+  }
