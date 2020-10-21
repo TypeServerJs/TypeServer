@@ -1,6 +1,6 @@
 
 
-export default interface IAppInitEnvironment {
+export interface IAppInitEnvironment {
 
     /**
      * 

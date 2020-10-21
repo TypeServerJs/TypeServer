@@ -1,10 +1,53 @@
 {
-    "name": "typeserver",
+    "name": "@type-server/typeserver",
     "version": "0.0.1",
+    "main": "lib/index.js",
+    "keywords": [
+        "TypeServer",
+        "TypeScript"
+    ],
+    "author": "Ali Mousavi Kherad <alimousavikherad@gmail.com> (http://amkherad.ir)",
+    "license": "MIT",
     "devDependencies": {
         "@types/node": "^14.14.0",
         "tslib": "^2.0.3",
         "tslint": "^6.1.3",
         "typescript": "^4.0.3"
+    },
+    "scripts": {
+        "prebuild": "",
+        "build": "tsc",
+        "postbuild": "",
+        "prestart": "",
+        "start": "",
+        "test": ""
+    },
+    "dependencies": {
+        "@mutant/interface": "file:../lib/interface",
+        "@mutant/core": "file:../lib/core",
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.3.2",
+        "@testing-library/user-event": "^7.1.2",
+        "express": "^4.17.1",
+        "http-proxy": "^1.18.1",
+        "qs": "^6.9.4",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "react-scripts": "3.4.1",
+        "reflect-metadata": "^0.1.13",
+        "tsyringe": "^4.3.0",
+        "typescript": "^3.9.5"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     }
 }

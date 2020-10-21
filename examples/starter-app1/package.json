@@ -1,7 +1,0 @@
-{
-    "name": "type-server-starter-app1",
-    "version": "0.0.1",
-    "dependencies": {
-        "typeserver": "../../src"
-    }
-}
