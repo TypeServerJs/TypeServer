@@ -50,7 +50,9 @@ export class AppBuilder implements IAppBuilder {
 
         const appInitEnv = this.getInitEnvironment();
 
-        const app = new this.appType(appInitEnv) as AppBase;
+        const AppBaseType = this.appType;
+
+        const app = new AppBaseType(appInitEnv) as AppBase;
 
         app.configureServices(this.dependencyContainer);
 
