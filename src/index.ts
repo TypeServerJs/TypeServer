@@ -4,6 +4,8 @@ export * from './TypeServer';
 
 export * from './server/AppBuilder';
 export * from './server/IAppBuilder';
+export * from './server/IServerInfrastructure';
+export * from './server/EndpointInfo';
 
 export * from './infrastructure/IResult';
 export * from './infrastructure/IDependencyContainer';

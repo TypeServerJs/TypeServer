@@ -1,5 +1,6 @@
 import { IAppInitEnvironment } from './config/IAppInitEnvironment';
 import { IServerPipeline } from './infrastructure/IServerPipeline';
+import { IDependencyContainer } from './infrastructure/IDependencyContainer';
 
 export type AppConstructor = ({
     new(
@@ -13,8 +14,8 @@ export abstract class AppBase {
 
     }
 
-    configureServices(): any {
-
+    configureServices(services: IDependencyContainer): any {
+        
     }
 
     abstract configurePipeline(

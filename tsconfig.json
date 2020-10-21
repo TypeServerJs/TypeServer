@@ -22,6 +22,7 @@
       "dom",
       "dom.iterable",
       "ES6",
+      "ES2015",
       "esnext"
     ],
     "paths": {
