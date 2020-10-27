@@ -15,8 +15,15 @@ export * from './infrastructure/IDependencyContainer';
 export * from './infrastructure/IDependencyResolver';
 export * from './infrastructure/ILogger';
 export * from './infrastructure/IServerPipeline';
+export * from './infrastructure/IRequestContext';
 
-export * from './controllers/IResult';
+export * from './controllers/Result';
+
+export * from './messaging/Message';
+export * from './messaging/RequestAbstract';
+export * from './messaging/ResponseAbstract';
+export * from './messaging/http/HttpRequestMessage';
+export * from './messaging/http/HttpResponseMessage';
 
 export * from './controllers/ControllerBase';
 export * from './controllers/Controller';
@@ -38,3 +45,7 @@ export * from './controllers/binding/FromQuery';
 export * from './controllers/binding/FromRoute';
 export * from './controllers/binding/FromServices';
 export * from './controllers/binding/Bind';
+
+export * from './views/IViewEngine';
+export * from './views/ViewEngineParams';
+export * from './views/ViewResult';

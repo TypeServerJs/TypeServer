@@ -1,29 +1,24 @@
-import {IResult} from './IResult';
+import { ControllerResult } from './Result';
 import { HttpStatusCodes } from '../utilities/HttpStatusCodes';
-import { HttpResponseMessage } from '../messaging/http/HttpResponseMessage';
+import { ViewResult } from '../views/ViewResult';
+import { ViewEngineParams } from '../views/ViewEngineParams';
 
 
 export class ControllerBase {
 
-    ok() : Promise<IResult> {
+    ok(): ControllerResult {
         return this.status(200);
     }
 
-    status(statusCode: HttpStatusCodes) : Promise<IResult> {
-        return Promise.resolve({
-            execute: (req, res) => {
-                res.emit(new HttpResponseMessage(200))
-            }
-        });
+    status(statusCode: HttpStatusCodes): ControllerResult {
+        return {
+            statusCode
+        };
     }
 
-    view(viewName: string): Promise<IResult> {
+    view(params: ViewEngineParams): ControllerResult {
 
-        return Promise.resolve({
-            execute: async (req, res) => {
-                
-            }
-        });
+        return new ViewResult(params);
     }
 
 }

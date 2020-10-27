@@ -1,9 +1,10 @@
 
+export type DependencyToken = string;
 
 export interface IDependencyResolver {
 
     resolve(
-        name: string
+        dependency: DependencyToken
     ): any;
 
 }
