@@ -17,7 +17,9 @@ export class AppBuilder implements IAppBuilder {
     private pipeline: IServerPipeline;
     private dependencyContainer: IDependencyContainer;
     private configBuilder: IConfigBuilder;
+    private _isConfigBuilt: boolean;
     private afterConfigAvailableCallbacks: AfterConfigAvailableCallback[];
+
 
     constructor(
         protected server: IServerInfrastructure,
@@ -28,15 +30,26 @@ export class AppBuilder implements IAppBuilder {
         this.dependencyContainer = null!;
         this.configBuilder = new ConfigBuilder();
         this.afterConfigAvailableCallbacks = [];
+        this._isConfigBuilt = false;
     }
 
-    setApplicationProfile(profile: string): IAppBuilder {
-        this.appEnv.setEnv(profile);
+
+    setEnvironment(environmentName: string): IAppBuilder {
+        
+        if (this._isConfigBuilt) {
+            throw new Error('Config has been made.');
+        }
+
+        this.appEnv.setEnv(environmentName);
 
         return this;
     }
 
     config(config: ConfigCallback): IAppBuilder {
+
+        if (this._isConfigBuilt) {
+            throw new Error('Config has been made.');
+        }
 
         if (config) {
 
@@ -49,6 +62,11 @@ export class AppBuilder implements IAppBuilder {
     }
 
     afterConfigAvailable(config: AfterConfigAvailableCallback): IAppBuilder {
+        
+        if (this._isConfigBuilt) {
+            throw new Error('Config has been made.');
+        }
+
         this.afterConfigAvailableCallbacks.push(config);
 
         return this;
@@ -80,6 +98,9 @@ export class AppBuilder implements IAppBuilder {
 
 
     buildConfig(): Configuration {
+
+        this._isConfigBuilt = true;
+
         return undefined!;
     }
 
@@ -89,6 +110,10 @@ export class AppBuilder implements IAppBuilder {
         const appEnv = this.getEnvironment();
 
         const config = this.buildConfig();
+
+        for (const callback of this.afterConfigAvailableCallbacks) {
+            callback(this, config, appEnv);
+        }
 
         const AppBaseType = this.appType;
 
@@ -110,8 +135,8 @@ export class AppBuilder implements IAppBuilder {
         }
 
         const app = this.configureApplication();
-
-        await this.server.start();
+        
+        await this.server.start(app);
 
     }
 

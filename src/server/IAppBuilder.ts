@@ -10,7 +10,7 @@ export type ConfigCallback = (builder: IConfigBuilder, env: IAppEnvironment) => 
 
 export interface IAppBuilder {
 
-    setApplicationProfile(profile: string): IAppBuilder;
+    setEnvironment(environmentName: string): IAppBuilder;
 
     config(config: ConfigCallback): IAppBuilder;
 

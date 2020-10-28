@@ -1,4 +1,5 @@
 import { EndpointInfo } from './EndpointInfo';
+import { AppBase } from '../AppBase';
 
 
 export interface IServerInfrastructure {
@@ -7,7 +8,7 @@ export interface IServerInfrastructure {
 
     listen(endpoint: EndpointInfo): void;
 
-    start(): Promise<void>;
+    start(app: AppBase): Promise<void>;
 
     stop(): Promise<void>;
 
