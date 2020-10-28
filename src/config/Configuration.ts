@@ -8,6 +8,7 @@ export type ConfigurationEntry =
 export class Configuration {
 
     private config: Record<string, ConfigurationEntry>;
+    private _levelSeparator: string = ':';
 
     constructor() {
 
@@ -32,25 +33,71 @@ export class Configuration {
     }
 
 
-    get(path: string): string {
-        return '';
+    get(path: string, defaultValue: any = undefined): ConfigurationEntry | undefined {
+
+        const pathTokens = path.split(this._levelSeparator);
+
+        let target: ConfigurationEntry = this.config;
+
+        for (const key of pathTokens) {
+
+            if (typeof target === 'object') {
+                if (target instanceof Configuration) {
+                    target = target.get(key);
+
+                    if (typeof target === 'undefined') {
+                        return defaultValue;
+                    }
+                } else if (target.hasOwnProperty(key)) {
+                    target = target[key];
+
+                    if (typeof target === 'undefined') {
+                        return defaultValue;
+                    }
+                } else {
+                    return defaultValue;
+                }
+            } else {
+                break;
+            }
+
+        }
+
+        return target;
     }
 
-    getInt(path: string): number {
-        return 0;
+    getInt(path: string, defaultValue: number = 0): number {
+
+        const value = this.get(path, defaultValue);
+
+        return parseInt(value);
     }
 
-    getString(path: string): string {
-        return '';
+    getString(path: string, defaultValue: string = ''): string {
+
+        const value = this.get(path, defaultValue);
+
+        return value;
     }
 
-    getDateTime(path: string): Date {
-        return new Date();
+    getDateTime(path: string, defaultValue: Date = new Date()): Date {
+
+        const value = this.get(path, defaultValue);
+
+        return value;
     }
 
 
     sync(value: Configuration) {
-        
+
+        for (const key in value.config) {
+            if (value.config.hasOwnProperty(key)) {
+                const element = value.config[key];
+
+                this.syncKey(key, element);
+            }
+        }
+
     }
 
     syncKey(
@@ -67,9 +114,24 @@ export class Configuration {
         }
         else if (typeof value === 'object') {
 
-            const child = Configuration.fromObject(value);
+            if (value instanceof Configuration) {
 
-            this.config[key] = child;
+                if (
+                    this.config.hasOwnProperty(key) &&
+                    this.config[key] instanceof Configuration
+                ) {
+                    this.config[key].sync(value);
+                } else {
+                    this.config[key] = value;
+                }
+
+            } else {
+
+                const child = Configuration.fromObject(value);
+
+                this.config[key] = child;
+
+            }
 
         } else {
             this.config[key] = value.toString();
